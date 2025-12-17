@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: 'Montserrat', sans-serif;
+}
+html{
+  
+  background-position: center;
+  background-repeat: no-repeat;
+ background-attachment: fixed;
+  background-size: cover;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+}
+main{
+  width: 100%;
+  height: 150vh;
+}
+
+.peliculas-container {
+  display: flex;
+  overflow: hidden;
+  width: max-content; 
+  animation: scrollAnimation 20s linear infinite; 
+}
+
+.zoom{
+  transition: .5s;
+}
+.zoom:hover{
+  transform: scale(1.03);
+  transition: .5s;
+}
+
+@keyframes scrollAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% * 20)); 
+  }
+}
+header{
+  z-index:9999;
+}
+.peliculas-container:hover {
+  animation-play-state: paused;
+}
+.foto:hover, .texto:hover{
+  box-shadow: 0px 1px 10px white;
+}
+
+.texto {
+  opacity: 0; 
+ transition: opacity 7s;
+}
+.texto.aparecer {
+  opacity: 1; 
+   transition: .6s;
+}
+.botones:hover{
+  background-color: #f19914;
+  border-color: #e99921;
+}
+.botones, .botones:hover{
+  transition: .3s;
+}
+
+/* Ocultar el cuadro de instrucciones paso a paso del mapa */
+.leaflet-routing-container {
+    display: none !important;
+}
