@@ -1,81 +1,49 @@
-# TakeMeAway
+# 🚖 TakeMeAway
 
-TakeMeAway es una aplicación de demostración que combina un backend en **Laravel** y un frontend en **React** para simular un servicio de transporte. Permite registrarse, iniciar sesión, solicitar viajes, consultar conductores disponibles y revisar el historial de trayectos. El proyecto está pensado como un ejemplo educativo para un Trabajo Fin de Grado.
+![React](https://img.shields.io/badge/Frontend-React_18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Laravel](https://img.shields.io/badge/Backend-Laravel_10-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+![Status](https://img.shields.io/badge/Estado-Producción-success?style=flat-square)
 
-## Estructura del repositorio
+> **Plataforma integral de reserva de transporte privado con geolocalización en tiempo real.**
 
-- **`tfg/`** – Backend desarrollado en Laravel.
-- **`VistasTFG/`** – Frontend creado con React y Vite.
+🔗 **[VER DEMO EN VIVO](AQUÍ_PON_TU_URL_DE_PRODUCCION)**
 
-Cada parte se ejecuta y configura de forma independiente.
+---
 
-## Requisitos
+## 📄 Descripción del Proyecto
 
-- PHP 8.2 o superior con Composer
-- Node.js 18 o superior y npm
-- Servidor MySQL (o MariaDB)
+**TakeMeAway** es una aplicación web Full Stack diseñada para gestionar servicios de transporte VTC (similar a Uber). El sistema permite la conexión entre usuarios y conductores, calculando rutas y tarifas de forma dinámica.
 
-## Instalación
+El proyecto ha sido desarrollado siguiendo una arquitectura **Headless**, separando completamente la lógica de negocio (Backend API) de la interfaz de usuario (Frontend SPA), garantizando escalabilidad y seguridad.
 
-1. Clona el repositorio y entra en la carpeta del proyecto.
-2. Configura el backend:
-   ```bash
-   cd tfg
-   cp .env.example .env
-   composer install
-   npm install
-   php artisan key:generate
-   php artisan migrate --seed  # crea tablas y datos de ejemplo
-   ```
-3. Configura el frontend:
-   ```bash
-   cd ../VistasTFG
-   npm install
-   ```
+## 💡 Funcionalidades Clave
 
-## Variables de entorno
+* **Geocodificación Inversa:** Conversión automática de coordenadas geográficas en direcciones postales legibles mediante integración con OpenStreetMap/Nominatim.
+* **Cálculo de Rutas Inteligente:** Trazado de rutas optimizadas y estimación precisa de distancias utilizando OSRM (Open Source Routing Machine).
+* **Tarificación Dinámica:** Algoritmo propio para el cálculo de precios basado en kilometraje y tarifas base.
+* **Gestión de Usuarios:** Sistema robusto de autenticación y autorización mediante Tokens seguros.
+* **Interfaz Reactiva:** Experiencia de usuario fluida (SPA) con actualizaciones de estado en tiempo real sin recargas de página.
 
-Para enviar correos reales cambia `MAIL_MAILER` a `smtp` en `tfg/.env` y rellena tus credenciales de Gmail (puede que necesites una contraseña de aplicación).
+## 🛠️ Arquitectura y Tecnologías
 
-En `VistasTFG/.env` indica la URL del backend y tu enlace de Revolut para los pagos:
+El sistema está construido sobre un stack tecnológico moderno, priorizando el rendimiento y la mantenibilidad:
 
-```bash
-VITE_API_URL=http://127.0.0.1:8000/api
-VITE_REVOLUT_LINK=https://revolut.me/tu_cuenta
-```
-Asegúrate de no dejar espacios alrededor del signo `=` y reinicia el servidor de desarrollo si modificas estas variables.
+### Frontend (Cliente)
+* **Framework:** React 18 + Vite.
+* **Mapas:** Leaflet & React-Leaflet.
+* **Estilos:** Tailwind CSS (Diseño responsivo y sistema de diseño personalizado).
+* **Routing:** React Router DOM (Gestión de rutas protegidas).
 
-## Puesta en marcha
+### Backend (Servidor)
+* **Framework:** Laravel 10 (API RESTful).
+* **Base de Datos:** MySQL.
+* **Autenticación:** Laravel Sanctum (Seguridad basada en Tokens).
+* **ORM:** Eloquent (Modelado de datos y relaciones).
 
-- **Backend**: desde `tfg/` puedes lanzar el entorno de desarrollo con:
-  ```bash
-  composer dev
-  ```
-  Esto iniciará el servidor de Laravel, la cola de trabajos, el visor de logs y Vite para los recursos.
+## 👤 Autor
 
-- **Frontend**: en `VistasTFG/` ejecuta:
-  ```bash
-  npm run dev
-  ```
-  La aplicación React estará disponible normalmente en `http://localhost:5173`.
+**Manuel**
+* Desarrollador Full Stack
 
-## Funcionalidades principales
-
-- Registro e inicio de sesión de usuarios.
-- Listado de conductores con su valoración y zona de trabajo.
-- Cálculo de rutas y precio estimado utilizando Leaflet y OSRM.
-- Creación de viajes y notificación por correo al conductor seleccionado.
-- Historial de viajes para cada usuario.
-- Pago mediante enlace de Revolut (código QR en el frontend).
-
-## Pruebas
-
-El backend incluye pruebas de ejemplo que puedes ejecutar con:
-```bash
-cd tfg
-php artisan test
-```
-
-## Contribución
-
-Se aceptan sugerencias y mejoras mediante *pull requests*. Este proyecto se ofrece únicamente con fines formativos.
+---
+*© 2025 TakeMeAway. Todos los derechos reservados.*
