@@ -1,32 +1,44 @@
-# Usamos PHP 8.2 con Apache (lo estándar para Laravel)
+# Usamos PHP 8.2 con Apache
 FROM php:8.2-apache
 
-# Instalamos las librerías necesarias para que funcione PostgreSQL (Neon) y otras
+# INSTALACIÓN DE DEPENDENCIAS DEL SISTEMA
+# He añadido 'git', 'curl' y 'libzip-dev' que son vitales para Composer
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
     unzip \
-    && docker-php-ext-install pdo pdo_pgsql
+    libzip-dev \
+    libpq-dev \
+    && docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
 
-# Configuramos Apache para que apunte a la carpeta pública de Laravel
+# Configuración de Apache
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 RUN a2enmod rewrite
 
-# Preparamos la carpeta de trabajo
+# Directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiamos todo tu código al contenedor
-COPY . /var/www/html
-
-# Instalamos Composer (el gestor de paquetes)
+# Instalamos Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Instalamos las dependencias de Laravel
-RUN composer install --no-dev --optimize-autoloader
+# Copiamos primero los archivos de definición para aprovechar la caché de Docker
+COPY composer.json composer.lock ./
 
-# Damos permisos a las carpetas de almacenamiento (para que no de error 500)
+# Instalamos dependencias
+# Añadimos --ignore-platform-reqs por si hay alguna pequeña diferencia de versión de PHP
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Copiamos el resto del código
+COPY . .
+
+# Permisos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Comando final: Corremos las migraciones y arrancamos el servidor
+# Comando de arranque
 CMD php artisan migrate --force && apache2-foreground
