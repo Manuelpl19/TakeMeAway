@@ -8,15 +8,13 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register'],
 
     'allowed_methods' => ['*'],
 
-    // Aquí está el truco: Aceptamos localhost, 127.0.0.1 y cualquier puerto
     'allowed_origins' => [
         'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'https://takemyaway.netlify.app/'
+        'https://takemyaway.netlify.app' 
     ],
 
     'allowed_origins_patterns' => [],
@@ -27,6 +25,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true, 
 
 ];
